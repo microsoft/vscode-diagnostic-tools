@@ -8,7 +8,7 @@
 	"engines": {
 		"vscode": "^1.75.0"
 	},
-	"publisher": "microsoft",
+	"publisher": "ms-vscode",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/microsoft/vscode-diagnostic-tools"
