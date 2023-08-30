@@ -1,0 +1,9 @@
+{
+	"name": "webview",
+	"version": "1.0.0",
+	"main": "index.js",
+	"license": "MIT",
+	"dependencies": {
+		"monaco-editor-core": "^0.42.0-dev-20230829"
+	}
+}
