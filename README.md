@@ -38,6 +38,74 @@ This viewer is used to display the diffs produced by the [VS Code diff snapshot 
 
 ![Screenshot](docs/diff-json-viewer-screenshot.png)
 
+
+## Debugger Scripts
+
+This extension allows to run custom scripts when debugging in VS Code.
+The VS Code repository makes use of this to enable hot reloading.
+
+### Configuration
+
+Custom scripts can be specified with the `vscode-diagnostic-tools.debuggerScripts` property in the corresponding launch config of the debug session.
+The debugger scripts property is expected to be an array of absolute file paths. Use `${workspaceFolder}` to refer to the workspace folder of the launch config.
+
+For example:
+```json
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Run Extension",
+			"type": "extensionHost",
+			"request": "launch",
+			"args": ["--extensionDevelopmentPath=${workspaceFolder}",],
+			"outFiles": ["${workspaceFolder}/out/**/*.js"],
+
+			"debuggerScripts": [
+				"${workspaceFolder}/scripts/my-debugger-script.js"
+			]
+		}
+	]
+}
+```
+
+### Scripts
+
+A debugger script is a NodeJS module which is expected to export a function called `run` of type [`RunFunction`](./src/debugger-scripts-api.d.ts).
+This function is called for every new debug session. The returned dispose function is called when the debug session ends (or when the debugger script is reloaded).
+
+Such a script could look like this:
+```js
+// @ts-check
+/// <reference path='debugger-scripts-api.d.ts' />
+
+console.log('script loaded');
+
+/** @type {RunFunction} */
+module.exports.run = async function (debugSession) {
+	console.log('script started');
+
+    // This code runs in the debugger
+    debugSession.evalJs(function (data) {
+        // This code runs in the debuggee (assuming it can evaluate JS expressions)
+        console.log(data);
+    }, 'some JSON serializable data');
+
+	return {
+		dispose() {
+			console.log('script stopped');
+		}
+	};
+};
+```
+
+Debugger scripts are automatically reloaded when changed.
+Before the new script is loaded and executed, the `dispose` function of the previous script is called.
+The `dispose` function is also called when the debug session stops.
+
+When multiple debug sessions load the same script, the script is only loaded once, however, the `run` function is called for every debug session.
+
+
 ## Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a

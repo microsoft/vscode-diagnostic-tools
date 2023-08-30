@@ -12,7 +12,9 @@
 		"type": "git",
 		"url": "https://github.com/microsoft/vscode-diagnostic-tools"
 	},
-	"activationEvents": [],
+	"activationEvents": [
+		"onDebug"
+	],
 	"main": "dist/index.js",
 	"contributes": {
 		"customEditors": [
