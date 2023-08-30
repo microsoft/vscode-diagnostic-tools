@@ -16,12 +16,12 @@ require(['vs/editor/editor.main'], function () {
      * @type import("monaco-editor-core").editor.LineRangeMapping[]
      */
     let changes = [];
-debugger;
+
     const diffEditor = m.editor.createDiffEditor(document.getElementById('container'), {
         automaticLayout: true,
         ignoreTrimWhitespace: false,
         experimental: {
-            useVersion2: true,
+            //useVersion2: true, TODO@hediet: enable this when customizing the diff algorithm is possible.
         },
         diffAlgorithm: {
             onDidChange: changeEmitter.event,
