@@ -2,7 +2,6 @@
 	"name": "vscode-diagnostic-tools",
 	"displayName": "VS Code Diagnostic Tools",
 	"description": "A collection of tools designed to aid debugging and developing VS Code",
-	"author": "microsoft",
 	"version": "1.0.0",
 	"license": "MIT",
 	"engines": {
