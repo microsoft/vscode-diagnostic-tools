@@ -30,8 +30,8 @@ extends:
         displayName: Install dependencies
         workingDirectory: $(Build.SourcesDirectory)/webview
 
-      - script: yarn run compile
-        displayName: Compile
+      - script: yarn run build
+        displayName: Build
 
     tsa:
       enabled: true
