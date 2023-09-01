@@ -61,7 +61,7 @@ For example:
 			"args": ["--extensionDevelopmentPath=${workspaceFolder}",],
 			"outFiles": ["${workspaceFolder}/out/**/*.js"],
 
-			"debuggerScripts": [
+			"vscode-diagnostic-tools.debuggerScripts": [
 				"${workspaceFolder}/scripts/my-debugger-script.js"
 			]
 		}
