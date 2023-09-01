@@ -1,4 +1,6 @@
 {
 	"editor.formatOnSave": true,
-	"git.branchProtection": ["main"]
+	"git.branchProtection": ["main"],
+	"git.branchRandomName.enable": true,
+	"git.branchProtectionPrompt": "alwaysCommitToNewBranch"
 }
