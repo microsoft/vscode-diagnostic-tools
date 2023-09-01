@@ -8,3 +8,6 @@
 !webview/src/**/*
 !webview/node_modules/monaco-editor-core/min/**/*
 !docs/**/*
+!node_modules/base64-js/**/*
+!node_modules/lzma/**/*
+!node_modules/messagepack/**/*
