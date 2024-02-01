@@ -91,7 +91,7 @@ class HotScriptReference<T> {
 	constructor(
 		private readonly _script: HotScript<T>,
 		public readonly dispose: () => void
-	) {}
+	) { }
 
 	public onExportsChanged(watcher: () => void): IDisposable {
 		return this._script.onExportsChanged(watcher);
@@ -189,7 +189,8 @@ class ManagedDebugSession {
 					disposeScriptDisposables();
 					try {
 						scriptDisposable = scriptRef.exports.run(
-							this._debugSessionApi
+							this._debugSessionApi,
+							{ vscode: vscode }
 						);
 						await scriptDisposable;
 					} catch (e) {
@@ -234,7 +235,7 @@ function resolvePaths(
 }
 
 export class StringTemplate {
-	constructor(private readonly template: string) {}
+	constructor(private readonly template: string) { }
 
 	evaluate(data: Record<string, () => string>): string {
 		return this.template.replace(/\$\{([a-zA-Z0-9]+)\}/g, (substr, grp1) =>
@@ -245,26 +246,31 @@ export class StringTemplate {
 
 function createDebugSession(vscodeSession: vscode.DebugSession): IDebugSession {
 	class DebugSessionImpl implements IDebugSession {
-		async evalJs<T extends any[]>(
-			body: (...args: T) => void,
+		async evalJs<T extends any[], TResult>(
+			body: (...args: T) => TResult,
 			...args: T
-		): Promise<void> {
-			const expression = `(${body.toString()})(${args
+		): Promise<TResult> {
+			const expression = `JSON.stringify((${body.toString()})(${args
 				.map((arg) => JSON.stringify(arg))
-				.join(",")})`;
+				.join(",")}))`;
 
 			const reply = await vscodeSession.customRequest("evaluate", {
 				expression: expression,
 				frameId: undefined,
-				context: "repl",
+				context: "copy",
 			});
+
+			if (typeof reply.result === "string") {
+				return JSON.parse(reply.result);
+			}
+			return undefined as any;
 		}
 
 		async eval(expression: string): Promise<void> {
 			const reply = await vscodeSession.customRequest("evaluate", {
 				expression: expression,
 				frameId: undefined,
-				context: "repl",
+				context: "copy",
 			});
 		}
 
