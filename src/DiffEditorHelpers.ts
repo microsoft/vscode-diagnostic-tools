@@ -168,10 +168,19 @@ diffEditor.setModel({
 `;
 
 async function getLatestDevVersion() {
-	const data = (await (
-		await (globalThis as any).fetch(
-			"https://registry.npmjs.org/-/package/monaco-editor/dist-tags"
-		)
-	).json()) as { latest: string; next: string };
-	return data.next;
+	try {
+		const data = (await (
+			await (globalThis as any).fetch(
+				"https://registry.npmjs.org/-/package/monaco-editor/dist-tags"
+			)
+		).json()) as { latest: string; next: string };
+		return data.next;
+	} catch (e) {
+		const data = (await (
+			await (globalThis as any).fetch(
+				"https://cdn.jsdelivr.net/npm/monaco-editor@next/package.json"
+			)
+		).json()) as { version: string };
+		return data.version;
+	}
 }
