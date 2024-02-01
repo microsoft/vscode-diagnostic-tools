@@ -4,16 +4,20 @@
  *--------------------------------------------------------------------------------------------*/
 
 type RunFunction =
-	| ((debugSession: IDebugSession) => IDisposable)
-	| ((debugSession: IDebugSession) => Promise<IDisposable>);
+	| ((debugSession: IDebugSession, context: Context) => IDisposable)
+	| ((debugSession: IDebugSession, context: Context) => Promise<IDisposable>);
 
 interface IDebugSession {
 	name: string;
-	eval(expression: string): Promise<void>;
-	evalJs<T extends any[]>(
-		bodyFn: (...args: T) => void,
+	eval(expression: string): Promise<unknown>;
+	evalJs<T extends any[], TResult>(
+		bodyFn: (...args: T) => TResult,
 		...args: T
-	): Promise<void>;
+	): Promise<TResult>;
+}
+
+interface Context {
+	vscode: typeof import('vscode');
 }
 
 interface IDisposable {
