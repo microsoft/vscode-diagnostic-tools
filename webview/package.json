@@ -3,6 +3,6 @@
 	"main": "index.js",
 	"license": "MIT",
 	"dependencies": {
-		"monaco-editor": "^0.44.0-dev-20230918"
+		"monaco-editor": "^0.45.0-dev-20231205"
 	}
 }
