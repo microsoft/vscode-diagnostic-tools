@@ -2,7 +2,7 @@
 	"name": "vscode-diagnostic-tools",
 	"displayName": "VS Code Diagnostic Tools",
 	"description": "A collection of tools designed to aid debugging and developing VS Code",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"license": "MIT",
 	"engines": {
 		"vscode": "^1.75.0"
