@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { exec, spawn } from "child_process";
+import { spawn } from "child_process";
 
 const gitPlaygroundPathKey =
 	"vscode-diagnostic-tools.merge-editor.git-repo-target-path";
