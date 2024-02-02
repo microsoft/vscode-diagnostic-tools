@@ -1,3 +1,5 @@
+/// <reference path="./types.d.ts" />
+
 require(['vs/editor/editor.main'], function () {
 	document.body.innerHTML = `
 		<div style="width: 100%; height: 100%; display: flex; flex-direction: column;">
@@ -20,6 +22,7 @@ require(['vs/editor/editor.main'], function () {
 						identical: false,
 						quitEarly: false,
 						changes: changes,
+						moves: moves,
 					};
 					return d;
 				}
@@ -33,10 +36,8 @@ require(['vs/editor/editor.main'], function () {
 
 
 	const changeEmitter = new m.Emitter();
-	/**
-	 * @type import("monaco-editor").editor.LineRangeMapping[]
-	 */
 	let changes = [];
+	let moves = [];
 
 	const diffEditor = m.editor.createDiffEditor(document.getElementById('container'), {
 		automaticLayout: true,
@@ -44,6 +45,9 @@ require(['vs/editor/editor.main'], function () {
 		hideUnchangedRegions: {
 			enabled: true,
 		},
+		experimental: {
+			showMoves: true,
+		}
 	});
 
 	m.languages.typescript.typescriptDefaults.setDiagnosticsOptions({ noSemanticValidation: true, noSyntaxValidation: true });
@@ -62,9 +66,10 @@ require(['vs/editor/editor.main'], function () {
 		type: 'ready'
 	});
 
-	const { RangeMapping, DetailedLineRangeMapping } = require('vs/editor/common/diff/rangeMapping');
+	const { RangeMapping, DetailedLineRangeMapping, LineRangeMapping } = require('vs/editor/common/diff/rangeMapping');
 	const { Range } = require('vs/editor/common/core/range');
 	const { LineRange } = require('vs/editor/common/core/lineRange');
+	const { MovedText } = require('vs/editor/common/diff/linesDiffComputer');
 	
 	window.addEventListener('message', e => {
 		/**
@@ -73,14 +78,8 @@ require(['vs/editor/editor.main'], function () {
 		 *    originalDocument: string;
 		 *    modifiedDocument: string;
 		 *    languageId?: string;
-		 *    diffs: {
-		 *          originalRange: string;
-		 *          modifiedRange: string;
-		 *          innerChanges: {
-		 *              originalRange: string;
-		 *              modifiedRange: string;
-		 *          }[];
-		 *    }[]
+		 *    diffs: DiffingResult['diffs'];
+		 * 	  moves: DiffingResult['moves'];
 		 * }}
 		 */
 		const message = e.data;
@@ -102,20 +101,31 @@ require(['vs/editor/editor.main'], function () {
 			const [endLineNumber, endColumn] = endPos.split(',');
 			
 			return new Range(
-				+startLineNumber,
-				+startColumn,
-				+endLineNumber,
-				+endColumn
+				+startLineNumber.trim().split(' ')[0],
+				+startColumn.trim().split(' ')[0],
+				+endLineNumber.trim().split(' ')[0],
+				+endColumn.trim().split(' ')[0]
 			);  
 		}
 
-		changes = message.diffs.map(d => new DetailedLineRangeMapping(
-			parseLineRange(d.originalRange),
-			parseLineRange(d.modifiedRange),
-			d.innerChanges ? d.innerChanges.map(c => new RangeMapping(
-				parseRange(c.originalRange),
-				parseRange(c.modifiedRange)
-			)) : undefined
+		/**
+		 * @param {IDetailedDiff}
+		 */
+		function toDetailedLineRangeMapping(d) {
+			return new DetailedLineRangeMapping(
+				parseLineRange(d.originalRange),
+				parseLineRange(d.modifiedRange),
+				d.innerChanges ? d.innerChanges.map(c => new RangeMapping(
+					parseRange(c.originalRange),
+					parseRange(c.modifiedRange)
+				)) : undefined
+			);
+		}
+
+		changes = message.diffs.map(toDetailedLineRangeMapping);
+		moves = message.moves.map(m => new MovedText(
+			new LineRangeMapping(parseLineRange(m.originalRange), parseLineRange(m.modifiedRange)),
+			m.changes.map(d => toDetailedLineRangeMapping(d))
 		));
 
 		function lineRangeToRange(lineRange) {

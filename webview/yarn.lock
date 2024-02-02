@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-monaco-editor@^0.44.0-dev-20230918:
-  version "0.44.0-dev-20230918"
-  resolved "https://registry.yarnpkg.com/monaco-editor/-/monaco-editor-0.44.0-dev-20230918.tgz#8b3d901189e0694d3b2eb2442e1ffd77740cf602"
-  integrity sha512-/lvmYx1IAG1b7AVTfrZc4UJ4MsFY8fdUJboYS9+lRFCP3/pqsk62Eah+1hFPbgwAiUc2GaMOBpepwO5f4n3tfw==
+monaco-editor@^0.45.0-dev-20231205:
+  version "0.45.0-dev-20231205"
+  resolved "https://registry.yarnpkg.com/monaco-editor/-/monaco-editor-0.45.0-dev-20231205.tgz#032f726e5327c4f701c98054c738045523626bfb"
+  integrity sha512-wUaTmW/lBTqT+kvvV+HomNMimJsGxqrQSxYN/EqShwv+pT+h0OPdFTI6FOMctzSNfTuQofst+cn1OoXGdmc4+g==

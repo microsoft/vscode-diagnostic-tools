@@ -40,6 +40,7 @@ export class DiffJsonViewer {
 
 					interface DiffJsonDocument {
 						diffs: unknown;
+						moves: unknown;
 						languageId: string;
 						originalFileName: string | undefined;
 						modifiedFileName: string | undefined;
@@ -103,6 +104,7 @@ export class DiffJsonViewer {
 							originalDocument: originalDocument,
 							modifiedDocument: modifiedDocument,
 							diffs: doc.diffs,
+							moves: doc.moves,
 							languageId: originalPath
 								? guessLanguage(originalPath)
 								: undefined,
