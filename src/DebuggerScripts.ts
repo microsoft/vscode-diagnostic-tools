@@ -37,6 +37,8 @@ interface ScriptModule {
 	run?: RunFunction;
 }
 
+const nodeJsRequire = eval('require');
+
 class HotScript<T> {
 	private _timeout: NodeJS.Timeout | undefined;
 
@@ -70,9 +72,9 @@ class HotScript<T> {
 	}
 
 	private _reload() {
-		delete require.cache[this.moduleId];
+		delete nodeJsRequire.cache[this.moduleId];
 		try {
-			this._exports = require(this.moduleId);
+			this._exports = nodeJsRequire(this.moduleId);
 			for (const watcher of this._watchers) {
 				watcher();
 			}
@@ -82,7 +84,7 @@ class HotScript<T> {
 	}
 
 	dispose() {
-		delete require.cache[this.moduleId];
+		delete nodeJsRequire.cache[this.moduleId];
 		this._watcher.close();
 	}
 }
@@ -109,7 +111,7 @@ class ScriptManager {
 	>();
 
 	public load<T>(path: string): HotScriptReference<T> {
-		const moduleId = require.resolve(path);
+		const moduleId = nodeJsRequire.resolve(path);
 
 		let script = this._scripts.get(moduleId);
 		if (!script) {
