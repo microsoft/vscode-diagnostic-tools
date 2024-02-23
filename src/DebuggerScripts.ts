@@ -26,6 +26,14 @@ export class DebuggerScripts {
 				managedSessions.delete(e);
 			}
 		});
+
+		const session = vscode.debug.activeDebugSession;
+		if (session) {
+			managedSessions.set(
+				session,
+				new ManagedDebugSession(session, scriptManager)
+			);
+		}
 	}
 }
 
