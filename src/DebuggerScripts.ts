@@ -45,7 +45,7 @@ interface ScriptModule {
 	run?: RunFunction;
 }
 
-const nodeJsRequire = eval('require');
+const nodeJsRequire = eval('require'); // CodeQL [SM04509] This is to prevent webpack from rewriting "require", because we really want the nodejs require function here.
 
 class HotScript<T> {
 	private _timeout: NodeJS.Timeout | undefined;
