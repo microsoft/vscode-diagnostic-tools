@@ -13,7 +13,8 @@
 		"url": "https://github.com/microsoft/vscode-diagnostic-tools"
 	},
 	"activationEvents": [
-		"onDebug"
+		"onDebug",
+		"*"
 	],
 	"browser": "./dist/web/index.js",
 	"main": "./dist/desktop/index.js",
@@ -51,6 +52,11 @@
 				"title": "Report Bug",
 				"enablement": "isInDiffEditor",
 				"category": "Diagnose Diff Editor"
+			},
+			{
+				"command": "vscode-diagnostic-tools.debug-extension-host",
+				"title": "Debug Extension Host",
+				"category": "Diagnostic Tools"
 			}
 		],
 		"menus": {
