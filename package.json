@@ -16,6 +16,20 @@
 		"onDebug",
 		"*"
 	],
+	"files": [
+		"dist/**/*",
+		"package.json",
+		"README.md",
+		"CHANGELOG.md",
+		"LICENSE.md",
+		"webview/src/**/*",
+		"foobar",
+		"webview/node_modules/monaco-editor/min/**/*",
+		"docs/**/*",
+		"node_modules/base64-js/**/*",
+		"node_modules/lzma/**/*",
+		"node_modules/messagepack/**/*"
+	],
 	"browser": "./dist/web/index.js",
 	"main": "./dist/desktop/index.js",
 	"contributes": {
@@ -94,14 +108,15 @@
 		"typescript": "^4.8.2"
 	},
 	"scripts": {
-		"build": "npm run build-webpack-desktop && npm run build-webpack-web",
+		"build": "npm run build-webpack-desktop && npm run build-webpack-web && yarn run bundle",
 		"build-tsc": "tsc",
 		"build-webpack-desktop": "webpack --config webpack.config.ts --mode production --env TARGET=desktop",
 		"build-webpack-web": "webpack --config webpack.config.ts --mode production --env TARGET=web",
 		"dev": "tsc --watch",
-		"bundle": "vsce package -o dist/extension.vsix"
+		"bundle": "vsce package -o extension.vsix --allow-star-activation"
 	},
 	"devDependencies": {
+		"@vscode/vsce": "^2.30.1-0",
 		"clean-webpack-plugin": "^4.0.0",
 		"ts-loader": "^9.5.0",
 		"ts-node": "^10.9.1",
