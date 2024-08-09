@@ -14,7 +14,7 @@
 	},
 	"activationEvents": [
 		"onDebug",
-		"*"
+		"onStartupFinished"
 	],
 	"files": [
 		"dist/**/*",
@@ -66,11 +66,6 @@
 				"title": "Report Bug",
 				"enablement": "isInDiffEditor",
 				"category": "Diagnose Diff Editor"
-			},
-			{
-				"command": "vscode-diagnostic-tools.debug-extension-host",
-				"title": "Debug Extension Host",
-				"category": "Diagnostic Tools"
 			}
 		],
 		"menus": {
