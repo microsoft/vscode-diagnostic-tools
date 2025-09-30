@@ -72,11 +72,11 @@
 			"explorer/context": [
 				{
 					"command": "vscode-diagnostic-tools.open-folder-in-merge-editor-current",
-					"when": "explorerResourceIsFolder && resourceFilename =~ /merge-conflict/"
+					"when": "explorerResourceIsFolder && resourcePath =~ /merge-conflict/"
 				},
 				{
 					"command": "vscode-diagnostic-tools.reproduce-conflict-in-playground",
-					"when": "explorerResourceIsFolder && resourceFilename =~ /merge-conflict/"
+					"when": "explorerResourceIsFolder && resourcePath =~ /merge-conflict/"
 				}
 			]
 		},
