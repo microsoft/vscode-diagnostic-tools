@@ -108,7 +108,6 @@
 		"build-webpack-web": "webpack --config webpack.config.ts --mode production --env TARGET=web",
 		"dev": "tsc --watch",
 		"bundle": "vsce package -o extension.vsix --allow-star-activation",
-		"patch-prerelease": "node scripts/patch-prerelease.js",
 		"test": "echo \"No tests\""
 	},
 	"devDependencies": {
