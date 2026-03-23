@@ -20,7 +20,6 @@
 		"dist/**/*",
 		"package.json",
 		"README.md",
-		"CHANGELOG.md",
 		"LICENSE.md",
 		"webview/src/**/*",
 		"webview/node_modules/monaco-editor/min/**/*",
