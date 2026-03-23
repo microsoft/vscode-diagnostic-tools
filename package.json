@@ -20,10 +20,8 @@
 		"dist/**/*",
 		"package.json",
 		"README.md",
-		"CHANGELOG.md",
 		"LICENSE.md",
 		"webview/src/**/*",
-		"foobar",
 		"webview/node_modules/monaco-editor/min/**/*",
 		"docs/**/*",
 		"node_modules/base64-js/**/*",
@@ -103,12 +101,13 @@
 		"typescript": "^4.8.2"
 	},
 	"scripts": {
-		"build": "npm run build-webpack-desktop && npm run build-webpack-web && npm run bundle",
+		"build": "npm ci --prefix webview && npm run build-webpack-desktop && npm run build-webpack-web && npm run bundle",
 		"build-tsc": "tsc",
 		"build-webpack-desktop": "webpack --config webpack.config.ts --mode production --env TARGET=desktop",
 		"build-webpack-web": "webpack --config webpack.config.ts --mode production --env TARGET=web",
 		"dev": "tsc --watch",
-		"bundle": "vsce package -o extension.vsix --allow-star-activation"
+		"bundle": "vsce package -o extension.vsix --allow-star-activation",
+		"test": "echo \"No tests\""
 	},
 	"devDependencies": {
 		"@vscode/vsce": "^2.30.1-0",
