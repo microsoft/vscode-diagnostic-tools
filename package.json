@@ -98,7 +98,7 @@
 		"base64-js": "^1.5.1",
 		"lzma": "^2.3.2",
 		"messagepack": "^1.1.12",
-		"typescript": "^4.8.2"
+		"typescript": "^5.8.0"
 	},
 	"scripts": {
 		"build": "npm ci --prefix webview && npm run build-webpack-desktop && npm run build-webpack-web && npm run bundle",
