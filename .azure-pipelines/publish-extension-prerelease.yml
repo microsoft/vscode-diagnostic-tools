@@ -36,10 +36,6 @@ extends:
             - script: npm ci
               displayName: Install dependencies
 
-            - script: npm run patch-prerelease $(Build.BuildNumber)
-              displayName: Apply prerelease patch
-              workingDirectory: $(Build.SourcesDirectory)
-
             - script: npm run build
               displayName: Build
 
