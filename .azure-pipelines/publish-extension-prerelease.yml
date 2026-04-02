@@ -29,7 +29,7 @@ extends:
     template: azure-pipelines/extension/pre-release.yml@templates
     parameters:
         publishExtension: ${{ parameters.publishExtension }}
-        workingDirectory: $(Build.SourcesDirectory)/vscode-extension
+        workingDirectory: $(Build.SourcesDirectory)
         ghCreateTag: true
 
         buildSteps:
@@ -38,7 +38,7 @@ extends:
 
             - script: npm run patch-prerelease $(Build.BuildNumber)
               displayName: Apply prerelease patch
-              workingDirectory: $(Build.SourcesDirectory)/vscode-extension
+              workingDirectory: $(Build.SourcesDirectory)
 
             - script: npm run build
               displayName: Build

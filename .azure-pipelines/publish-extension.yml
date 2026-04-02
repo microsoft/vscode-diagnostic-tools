@@ -22,7 +22,7 @@ extends:
     template: azure-pipelines/extension/stable.yml@templates
     parameters:
         publishExtension: ${{ parameters.publishExtension }}
-        workingDirectory: $(Build.SourcesDirectory)/vscode-extension
+        workingDirectory: $(Build.SourcesDirectory)
         buildSteps:
             - script: npm ci
               displayName: Install dependencies
